@@ -5,7 +5,7 @@
         public string Title { get; set; }
         public int Salary { get; set; }
         public string Description { get; set; }
-
+        public DateTime Date { get; set; }
 
     }
 }
