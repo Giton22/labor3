@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace labor3.Models
 {
@@ -10,8 +11,8 @@ namespace labor3.Models
         public int Salary { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
-
-        public new ICollection<SiteUser> Users { get; set;}
+        [NotMapped]
+        public virtual ICollection<SiteUser> Users { get; set;}
         public Job()
         {
             UId = Guid.NewGuid().ToString();

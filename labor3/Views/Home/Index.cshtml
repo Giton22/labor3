@@ -2,5 +2,9 @@
 @model IEnumerable<Job>
 @inject SignInManager<SiteUser> SignInManager
 @inject UserManager<SiteUser> UserManager
-    
-<div>asd</div>
+    <ul>
+
+@foreach(var job in Model){
+    <li>@job.Title</li>
+}
+    </ul>

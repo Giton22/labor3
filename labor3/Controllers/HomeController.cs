@@ -63,12 +63,16 @@ namespace labor3.Controllers
         {
             return View(_db.Jobs);
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
+
+        [Authorize(Roles ="Admin")]
         public IActionResult Add()
         {
             return View();
         }
-        [Authorize]
+
+
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(Job job)
         {
