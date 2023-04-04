@@ -1,4 +1,6 @@
-﻿namespace labor3.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace labor3.Models
 {
     public class Job
     {
