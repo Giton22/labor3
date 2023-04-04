@@ -61,11 +61,61 @@ namespace labor3.Controllers
 
         public IActionResult Index()
         {
+            return View(_db.Jobs);
+        }
+        [Authorize]
+        public IActionResult Add()
+        {
             return View();
         }
-
-        public IActionResult Privacy()
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Add(Job job)
         {
+            job.UId = _userManager.GetUserId(this.User);
+
+            var old = _db.Jobs.FirstOrDefault(t => t.Title == job.Title && job.UId == job.UId);
+            if (old == null)
+            {
+                _db.Jobs.Add(job);
+                _db.SaveChanges();
+            }
+
+            var user = await _userManager.GetUserAsync(this.User);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(string uid)
+        {
+            var item = _db.Jobs.FirstOrDefault(t => t.UId == uid);
+            if (item != null && item.UId == _userManager.GetUserId(this.User))
+            {
+                _db.Jobs.Remove(item);
+                _db.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminDelete(string uid)
+        {
+            var item = _db.Jobs.FirstOrDefault(t => t.UId == uid);
+            if (item != null)
+            {
+                _db.Jobs.Remove(item);
+                _db.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+        [Authorize]
+        public async Task<IActionResult> Privacy()
+        {
+            var principal = this.User;
+            var user = await _userManager.GetUserAsync(principal);
             return View();
         }
 
